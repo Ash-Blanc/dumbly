@@ -52,7 +52,7 @@
     - _Preservation: Same as 3.1_
     - _Requirements: 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4_
 
-  - [~] 3.3 Verify bug condition exploration test now passes
+  - [-] 3.3 Verify bug condition exploration test now passes
     - **Property 1: Expected Behavior** - Status Update Without Detached Access
     - **IMPORTANT**: Re-run the SAME test from task 1 - do NOT write a new test
     - The test from task 1 encodes the expected behavior
