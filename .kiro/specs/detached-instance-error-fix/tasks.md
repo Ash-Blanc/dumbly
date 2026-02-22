@@ -44,7 +44,7 @@
     - _Preservation: All database operations, background tasks, workflow execution, and concurrent analysis handling that do NOT involve accessing lazy-loaded attributes on detached objects SHALL remain unchanged_
     - _Requirements: 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4_
 
-  - [-] 3.2 Implement the fix in select_paper method
+  - [x] 3.2 Implement the fix in select_paper method
     - Remove redundant status assignment on line 97: Delete `analysis.status = AnalysisStatus.PROCESSING.value`
     - Pass explicit status value on line 98: Change `analysis_repo.update_status(analysis_id, analysis.status)` to `analysis_repo.update_status(analysis_id, AnalysisStatus.PROCESSING.value)`
     - _Bug_Condition: Same as 3.1_
