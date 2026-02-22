@@ -26,8 +26,12 @@ AsyncSessionLocal = sessionmaker(
 )
 
 # Sync engine for Agno (it uses sync internally)
+sync_database_url = settings.database_url
+if sync_database_url.startswith("postgresql://"):
+    sync_database_url = sync_database_url.replace("postgresql://", "postgresql+psycopg://")
+    
 sync_engine = create_engine(
-    settings.database_url,
+    sync_database_url,
     echo=settings.debug,
     pool_size=5,
 )
