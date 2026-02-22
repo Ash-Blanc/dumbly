@@ -13,6 +13,7 @@ class AnalysisRepository:
     def create(self, analysis: Analysis) -> Analysis:
         with get_sync_session() as session:
             session.add(analysis)
+            session.flush()  # Flush to get the ID without committing
             session.refresh(analysis)
             return analysis
 
@@ -142,6 +143,7 @@ class ExportRepository:
     def create(self, export: Export) -> Export:
         with get_sync_session() as session:
             session.add(export)
+            session.flush()
             session.refresh(export)
             return export
 
