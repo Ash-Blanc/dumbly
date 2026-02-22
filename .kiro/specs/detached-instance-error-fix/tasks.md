@@ -1,6 +1,6 @@
 # Implementation Plan
 
-- [-] 1. Write bug condition exploration test
+- [x] 1. Write bug condition exploration test
   - **Property 1: Fault Condition** - Status Update Without Detached Access
   - **CRITICAL**: This test MUST FAIL on unfixed code - failure confirms the bug exists
   - **DO NOT attempt to fix the test or the code when it fails**
@@ -17,7 +17,7 @@
   - Mark task complete when test is written, run, and failure is documented
   - _Requirements: 2.1, 2.2, 2.3_
 
-- [~] 2. Write preservation property tests (BEFORE implementing fix)
+- [x] 2. Write preservation property tests (BEFORE implementing fix)
   - **Property 2: Preservation** - Database Operations and Background Tasks
   - **IMPORTANT**: Follow observation-first methodology
   - Observe behavior on UNFIXED code for non-buggy inputs (normal database operations, background tasks, workflow execution)
@@ -34,7 +34,7 @@
 
 - [ ] 3. Fix for detached instance error in analysis service
 
-  - [~] 3.1 Implement the fix in start_analysis method
+  - [x] 3.1 Implement the fix in start_analysis method
     - Remove redundant status assignment on line 36: Delete `analysis.status = AnalysisStatus.DISCOVERY.value`
     - Pass explicit status value on line 37: Change `analysis_repo.update_status(analysis.id, analysis.status)` to `analysis_repo.update_status(analysis.id, AnalysisStatus.DISCOVERY.value)`
     - Remove redundant status assignment on line 43: Delete `analysis.status = AnalysisStatus.PROCESSING.value`
@@ -44,7 +44,7 @@
     - _Preservation: All database operations, background tasks, workflow execution, and concurrent analysis handling that do NOT involve accessing lazy-loaded attributes on detached objects SHALL remain unchanged_
     - _Requirements: 2.1, 2.2, 2.3, 3.1, 3.2, 3.3, 3.4_
 
-  - [~] 3.2 Implement the fix in select_paper method
+  - [-] 3.2 Implement the fix in select_paper method
     - Remove redundant status assignment on line 97: Delete `analysis.status = AnalysisStatus.PROCESSING.value`
     - Pass explicit status value on line 98: Change `analysis_repo.update_status(analysis_id, analysis.status)` to `analysis_repo.update_status(analysis_id, AnalysisStatus.PROCESSING.value)`
     - _Bug_Condition: Same as 3.1_

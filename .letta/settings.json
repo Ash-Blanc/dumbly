@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(cd /home/ab916/src/dumbly && git shortlog -sn --all | head -10)",
+      "Bash(wc:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

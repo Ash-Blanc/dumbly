@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/.venv/bin/pytest
+# hypothesis_version: 6.151.9
+
+['-script.pyw', '.exe', '__main__']

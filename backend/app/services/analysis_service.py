@@ -36,8 +36,7 @@ class AnalysisService:
 
         if resolved.get("type") == "discovery":
             # Start paper discovery
-            analysis.status = AnalysisStatus.DISCOVERY.value
-            analysis_repo.update_status(analysis.id, analysis.status)
+            analysis_repo.update_status(analysis.id, AnalysisStatus.DISCOVERY.value)
 
             task = asyncio.create_task(
                 self._run_discovery(analysis, resolved["topic"], request)
@@ -45,8 +44,7 @@ class AnalysisService:
         else:
             # Direct analysis
             analysis.resolved_arxiv_id = resolved["arxiv_id"]
-            analysis.status = AnalysisStatus.PROCESSING.value
-            analysis_repo.update_status(analysis.id, analysis.status)
+            analysis_repo.update_status(analysis.id, AnalysisStatus.PROCESSING.value)
 
             task = asyncio.create_task(
                 self._run_workflow(analysis, resolved["arxiv_id"], request)
@@ -93,8 +91,7 @@ class AnalysisService:
 
         analysis = analysis_repo.get(analysis_id)
         analysis.resolved_arxiv_id = arxiv_id
-        analysis.status = AnalysisStatus.PROCESSING.value
-        analysis_repo.update_status(analysis_id, analysis.status)
+        analysis_repo.update_status(analysis_id, AnalysisStatus.PROCESSING.value)
 
         await stream_manager.emit(analysis_id, "status", {
             "status": "processing",
