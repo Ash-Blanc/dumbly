@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/services/export_service.py
+# hypothesis_version: 6.151.9
+
+['analysis_id', 'arxiv_id', 'business_models', 'exported_at', 'ideas', 'json', 'key_features', 'key_innovations', 'markdown', 'meta', 'paper_analysis', 'pdf', 'w']

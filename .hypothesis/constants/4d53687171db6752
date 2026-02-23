@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/services/__init__.py
+# hypothesis_version: 6.151.9
+
+['analysis_repo', 'analysis_service', 'export_repo', 'export_service', 'paper_service', 'stream_manager']

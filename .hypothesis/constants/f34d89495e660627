@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/agents/base.py
+# hypothesis_version: 6.151.9
+
+['anthropic', 'claude-sonnet-4-5', 'gemini-fast', 'gpt-4o', 'llama3.2', 'ollama', 'openai', 'pollinations']

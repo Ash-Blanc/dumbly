@@ -43,7 +43,7 @@ class AnalysisService:
             )
         else:
             # Direct analysis
-            analysis.resolved_arxiv_id = resolved["arxiv_id"]
+            analysis_repo.update_resolved_arxiv_id(analysis.id, resolved["arxiv_id"])
             analysis_repo.update_status(analysis.id, AnalysisStatus.PROCESSING.value)
 
             task = asyncio.create_task(
@@ -89,8 +89,7 @@ class AnalysisService:
         """Select a paper from discovery and start analysis"""
         discovered_paper_repo.select_paper(analysis_id, arxiv_id)
 
-        analysis = analysis_repo.get(analysis_id)
-        analysis.resolved_arxiv_id = arxiv_id
+        analysis_repo.update_resolved_arxiv_id(analysis_id, arxiv_id)
         analysis_repo.update_status(analysis_id, AnalysisStatus.PROCESSING.value)
 
         await stream_manager.emit(analysis_id, "status", {
@@ -98,6 +97,8 @@ class AnalysisService:
             "arxiv_id": arxiv_id
         })
 
+        # Retrieve analysis for passing to workflow
+        analysis = analysis_repo.get(analysis_id)
         task = asyncio.create_task(
             self._run_workflow(analysis, arxiv_id, request)
         )

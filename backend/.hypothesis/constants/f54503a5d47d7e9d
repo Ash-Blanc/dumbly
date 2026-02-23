@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/services/analysis_service.py
+# hypothesis_version: 6.151.9
+
+['BusinessModeler', 'MarketResearcher', 'PaperAnalyzer', 'SaaSIdeator', 'TechnicalArchitect', '\\[.*\\]', '\\{.*\\}', 'agent', 'arxiv_id', 'business_model', 'business_models', 'complete', 'discovery', 'discovery_complete', 'discovery_start', 'error', 'id', 'idea_generation', 'idea_id', 'ideas', 'market_insights', 'max_papers', 'novelty_score', 'paper_analysis', 'papers', 'processing', 'relevance_score', 'running', 'status', 'step', 'step_complete', 'step_start', 'technical_assessment', 'topic', 'type']

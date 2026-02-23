@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/models/requests.py
+# hypothesis_version: 6.151.9
+
+['alphaxiv.org', 'arxiv.org', 'arxiv_id', 'arxiv_url', 'huggingface.co', 'input', 'input_type', 'markdown', 'paperswithcode.com', 'platform_url', 'pollinations', 'semanticscholar.org', 'topic']

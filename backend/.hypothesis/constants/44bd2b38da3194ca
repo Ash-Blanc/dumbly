@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/services/repository.py
+# hypothesis_version: 6.151.9
+
+['arxiv_id', 'authors', 'categories', 'completed', 'novelty_score', 'published_date', 'relevance_score', 'summary', 'title']

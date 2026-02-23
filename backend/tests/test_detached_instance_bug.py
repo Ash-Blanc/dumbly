@@ -57,9 +57,13 @@ def create_detached_analysis(input_type: str, input_value: str) -> Analysis:
     # Session is now closed, retrieve the analysis again to get a detached object
     with get_sync_session() as session:
         analysis = session.get(Analysis, analysis_id)
-        # Return the analysis object - it will be detached when session closes
+        # Access id to ensure it's loaded
+        _ = analysis.id
+        # Expunge the object from the session to keep loaded attributes in memory
+        session.expunge(analysis)
     
     # At this point, analysis is detached from its session
+    # id is loaded in memory, but accessing status will trigger DetachedInstanceError
     return analysis
 
 
@@ -96,6 +100,10 @@ def create_detached_analysis_with_papers(topic: str, papers: list) -> Analysis:
     # Retrieve in a new session and let it become detached
     with get_sync_session() as session:
         analysis = session.get(Analysis, analysis_id)
+        # Access id to ensure it's loaded
+        _ = analysis.id
+        # Expunge the object from the session to keep loaded attributes in memory
+        session.expunge(analysis)
     
     return analysis
 
@@ -144,9 +152,11 @@ class TestDetachedInstanceBug:
         await analysis_service.start_analysis(analysis, request)
         
         # If we reach here after the fix, verify the status was updated correctly
-        updated_analysis = analysis_repo.get(analysis.id)
-        assert updated_analysis is not None
-        assert updated_analysis.status == AnalysisStatus.DISCOVERY.value
+        # Need to retrieve in a session context to avoid detached instance error
+        with get_sync_session() as session:
+            updated_analysis = session.get(Analysis, analysis.id)
+            assert updated_analysis is not None
+            assert updated_analysis.status == AnalysisStatus.DISCOVERY.value
     
     @pytest.mark.asyncio
     async def test_direct_analysis_detached_access(self, setup_database):
@@ -179,10 +189,12 @@ class TestDetachedInstanceBug:
         await analysis_service.start_analysis(analysis, request)
         
         # If we reach here after the fix, verify the status was updated correctly
-        updated_analysis = analysis_repo.get(analysis.id)
-        assert updated_analysis is not None
-        assert updated_analysis.status == AnalysisStatus.PROCESSING.value
-        assert updated_analysis.resolved_arxiv_id == "2301.12345"
+        # Need to retrieve in a session context to avoid detached instance error
+        with get_sync_session() as session:
+            updated_analysis = session.get(Analysis, analysis.id)
+            assert updated_analysis is not None
+            assert updated_analysis.status == AnalysisStatus.PROCESSING.value
+            assert updated_analysis.resolved_arxiv_id == "2301.12345"
     
     @pytest.mark.asyncio
     async def test_select_paper_detached_access(self, setup_database):
@@ -234,10 +246,12 @@ class TestDetachedInstanceBug:
         await analysis_service.select_paper(analysis.id, "2301.11111", request)
         
         # If we reach here after the fix, verify the status was updated correctly
-        updated_analysis = analysis_repo.get(analysis.id)
-        assert updated_analysis is not None
-        assert updated_analysis.status == AnalysisStatus.PROCESSING.value
-        assert updated_analysis.resolved_arxiv_id == "2301.11111"
+        # Need to retrieve in a session context to avoid detached instance error
+        with get_sync_session() as session:
+            updated_analysis = session.get(Analysis, analysis.id)
+            assert updated_analysis is not None
+            assert updated_analysis.status == AnalysisStatus.PROCESSING.value
+            assert updated_analysis.resolved_arxiv_id == "2301.11111"
 
 
 class TestDetachedInstanceBugPropertyBased:
@@ -289,9 +303,10 @@ class TestDetachedInstanceBugPropertyBased:
         await analysis_service.start_analysis(analysis, request)
         
         # Verify status update
-        updated_analysis = analysis_repo.get(analysis.id)
-        assert updated_analysis is not None
-        assert updated_analysis.status == AnalysisStatus.DISCOVERY.value
+        with get_sync_session() as session:
+            updated_analysis = session.get(Analysis, analysis.id)
+            assert updated_analysis is not None
+            assert updated_analysis.status == AnalysisStatus.DISCOVERY.value
     
     @given(
         arxiv_id=st.text(min_size=10, max_size=15).filter(
@@ -331,6 +346,7 @@ class TestDetachedInstanceBugPropertyBased:
         await analysis_service.start_analysis(analysis, request)
         
         # Verify status update
-        updated_analysis = analysis_repo.get(analysis.id)
-        assert updated_analysis is not None
-        assert updated_analysis.status == AnalysisStatus.PROCESSING.value
+        with get_sync_session() as session:
+            updated_analysis = session.get(Analysis, analysis.id)
+            assert updated_analysis is not None
+            assert updated_analysis.status == AnalysisStatus.PROCESSING.value
