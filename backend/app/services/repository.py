@@ -34,6 +34,17 @@ class AnalysisRepository:
                 analysis.updated_at = datetime.utcnow()
                 session.add(analysis)
 
+    def update_resolved_arxiv_id(self, analysis_id: str, arxiv_id: str) -> None:
+        """Update the resolved arXiv ID for an analysis"""
+        with get_sync_session() as session:
+            analysis = session.execute(
+                select(Analysis).where(Analysis.id == analysis_id)
+            ).scalar_one_or_none()
+            if analysis:
+                analysis.resolved_arxiv_id = arxiv_id
+                analysis.updated_at = datetime.utcnow()
+                session.add(analysis)
+
     def update_progress(self, analysis_id: str, step: str, data: dict) -> None:
         with get_sync_session() as session:
             analysis = session.execute(

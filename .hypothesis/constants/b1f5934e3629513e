@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/config.py
+# hypothesis_version: 6.151.9
+
+['*', './exports', '.env', 'arXiv SaaS Generator', 'development', 'pollinations', 'utf-8']

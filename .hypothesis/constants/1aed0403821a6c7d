@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/models/domain.py
+# hypothesis_version: 6.151.9
+
+[0.0, 'analyses', 'analyses.id', 'completed', 'discovered_papers', 'discovery', 'error', 'exports', 'pending', 'pollinations', 'processing', 'workflow_sessions']

@@ -1,0 +1,4 @@
+# file: /home/ab916/src/dumbly/backend/app/services/stream_manager.py
+# hypothesis_version: 6.151.9
+
+['complete', 'data', 'error', 'progress', 'step', 'thought', 'timestamp', 'type']
